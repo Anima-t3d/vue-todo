@@ -3,7 +3,20 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-export const state = () => ({});
+export const state = () => ({
+  todos: [
+    {
+      id: "1",
+      title: "Remember the milk!",
+      isDone: false
+    },
+    {
+      id: "2",
+      title: "Remember the bread!",
+      isDone: true
+    }
+  ]
+});
 export const mutations = {
   ADD_TODO(state, { todo }) {
     state.todos.push(todo);

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <todo-list
-      :items="todoItems"
+      :items="getTodoItems"
       title="Todo's"
       @update="onUpdateItem"
       @remove="onRemoveItem"
@@ -29,35 +29,22 @@ export default {
   },
   data() {
     return {
-      todoItems: [
-        {
-          id: "1",
-          title: "Remember the milk!",
-          isDone: false
-        },
-        {
-          id: "2",
-          title: "Remember the bread!",
-          isDone: true
-        }
-      ],
-      newTodo: NEW_TODO,
-
-      // Status
-      isAdding: false
+      newTodo: NEW_TODO
     };
   },
   computed: {
     canAdd() {
-      console.log("can add", this.newTodo.title);
       return !!this.newTodo.title;
+    },
+    getTodoItems() {
+      return this.$store.state.todos;
     }
   },
   methods: {
     onUpdateItem($event) {
       this.updateItem({ ...$event });
     },
-    updateItem({ id, field, value }) {
+    async updateItem({ id, field, value }) {
       if (!id) {
         console.error("[updateItem] Expected id");
         return;
@@ -70,18 +57,31 @@ export default {
         console.error("[updateItem] Expected boolean value");
         return;
       }
-      const todo = this.todoItems.find(todo => {
-        return todo.id === id;
-      });
-      todo[field] = value;
+      if (field !== 'isDone') {
+        console.error("[updateItem] only updating of isDone is supported");
+        return;
+      }
+
+      try {
+        await this.$store.dispatch("updateTodoStatus", {id, isDone: value});
+      } catch (error) {
+        console.error(error);
+      }
     },
-    onAddToList() {
-      this.todoItems.push(this.newTodo);
-      this.isAdding = false;
+    async onAddToList() {
+      try {
+        await this.$store.dispatch("addTodo", {todo: this.newTodo});
+      } catch (error) {
+        console.error(error);
+      }
       this.newTodo = { ...NEW_TODO, title: "" };
     },
-    onRemoveItem({ id }) {
-      this.todoItems = this.todoItems.filter(todo => todo.id !== id);
+    async onRemoveItem({ id }) {
+      try {
+        await this.$store.dispatch("removeTodo", {id});
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 };
