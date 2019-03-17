@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <todo-list :items="todoItems" title="Todo's" @update="onUpdateItem" />
+    <todo-list :items="todoItems" title="Todo's" @update="onUpdateItem" @remove="onRemoveItem" />
     <div class="actions">
       <input
         type="text"
@@ -81,7 +81,10 @@ export default {
       this.todoItems.push(this.newTodo);
       this.isAdding = false;
       this.newTodo = { ...NEW_TODO, title: "" };
-    }
+    },
+    onRemoveItem({id}) {
+      this.todoItems = this.todoItems.filter(todo => todo.id !== id);
+    },
   }
 };
 </script>

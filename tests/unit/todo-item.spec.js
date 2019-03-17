@@ -54,4 +54,14 @@ describe("TodoItem.vue", () => {
     const value = checkbox.element.checked;
     expect(value).toBe(!todo.isDone);
   });
+  it("emits remove event with id", () => {
+    const wrapper = shallowMount(TodoItem, {
+      propsData: { ...todo }
+    });
+    const removeBtn = wrapper.find(".todo-item__remove");
+
+    removeBtn.trigger("click");
+    expect(wrapper.emitted().remove).toBeTruthy();
+    expect(wrapper.emitted().remove[0][0]).toEqual({id: todo.id});
+  });
 });

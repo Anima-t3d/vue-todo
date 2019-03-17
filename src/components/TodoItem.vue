@@ -4,6 +4,9 @@
     <h4 :class="{ 'todo-item--done': isDone }" class="todo-item__title">
       {{ title }}
     </h4>
+    <button class="todo-item__remove" @click="$emit('remove', {id})">
+      Remove
+    </button>
   </li>
 </template>
 
@@ -46,10 +49,28 @@ export default {
   &__title {
     display: flex;
     margin: 0;
+    flex: 1 1 auto;
   }
 
   &--done {
     text-decoration: line-through;
+  }
+
+  &__remove {
+    display: flex;
+    flex: 0 0 auto;
+    padding: 4px;
+    background: darkred;
+    border: none;
+    color: #ffffff;
+    display: none;
+    cursor: pointer;
+  }
+
+  &:hover {
+    .todo-item__remove {
+      display: flex;
+    }
   }
 }
 </style>

@@ -11,6 +11,7 @@
           :title="todo.title"
           :isDone="todo.isDone"
           @update="$event => $emit('update', $event)"
+          @remove="$event => $emit('remove', $event)"
         />
       </template>
     </ul>
