@@ -19,7 +19,7 @@
 
 <script>
 // @ is an alias to /src
-import { NEW_TODO } from "../../config";
+import { createTodo } from "../../config";
 import TodoList from "@/components/TodoList.vue";
 
 export default {
@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      newTodo: NEW_TODO
+      newTodo: createTodo()
     };
   },
   computed: {
@@ -57,13 +57,13 @@ export default {
         console.error("[updateItem] Expected boolean value");
         return;
       }
-      if (field !== 'isDone') {
+      if (field !== "isDone") {
         console.error("[updateItem] only updating of isDone is supported");
         return;
       }
 
       try {
-        await this.$store.dispatch("updateTodoStatus", {id, isDone: value});
+        await this.$store.dispatch("updateTodoStatus", { id, isDone: value });
       } catch (error) {
         console.error(error);
       }
@@ -74,11 +74,11 @@ export default {
       } catch (error) {
         console.error(error);
       }
-      this.newTodo = { ...NEW_TODO, title: "" };
+      this.newTodo = createTodo();
     },
     async onRemoveItem({ id }) {
       try {
-        await this.$store.dispatch("removeTodo", {id});
+        await this.$store.dispatch("removeTodo", { id });
       } catch (error) {
         console.error(error);
       }

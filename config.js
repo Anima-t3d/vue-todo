@@ -1,6 +1,11 @@
+import uuid from "uuid/v4";
+
 export const NEW_TODO = {
-  // TODO: use better id generator
-  id: "" + new Date().getTime(),
+  id: uuid(),
   title: "",
   isDone: false
+};
+
+export const createTodo = () => {
+  return { ...NEW_TODO, id: uuid() };
 };
