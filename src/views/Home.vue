@@ -1,20 +1,26 @@
 <template>
-  <div class="home">
-    <todo-list
-      :items="getTodoItems"
-      title="Todo's"
-      @update="onUpdateItem"
-      @remove="onRemoveItem"
-    />
-    <div class="actions">
-      <input
-        type="text"
-        v-model="newTodo.title"
-        placeholder="E.g. Remember the cookies"
-      />
-      <button :disabled="!canAdd" @click="onAddToList">Add</button>
+  <v-container>
+    <div class="home">
+      <v-card>
+        <todo-list
+          :items="getTodoItems"
+          title="Todo's"
+          @update="onUpdateItem"
+          @remove="onRemoveItem"
+        />
+        <v-card-actions class="actions">
+          <input
+            type="text"
+            v-model="newTodo.title"
+            placeholder="E.g. Remember the cookies"
+          />
+          <button :disabled="!canAdd" @click="onAddToList">
+            <v-icon color="green">add</v-icon>
+          </button>
+        </v-card-actions>
+      </v-card>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>

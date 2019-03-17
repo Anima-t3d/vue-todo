@@ -1,5 +1,8 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 import TodoItem from "@/components/TodoItem.vue";
+/*import Vuetify from "vuetify";
+const localVue = createLocalVue();
+localVue.use(Vuetify);*/
 
 let title = "";
 let todo = {};
@@ -23,36 +26,19 @@ describe("TodoItem.vue", () => {
     const wrapper = shallowMount(TodoItem, {
       propsData: { ...todo }
     });
-    const checkbox = wrapper.find("input[type=checkbox]");
 
     expect(wrapper.vm.isDone).toBe(todo.isDone);
-    const value = checkbox.element.checked;
-    expect(value).toBe(todo.isDone);
-  });
-  it("toggles props.isDone when clicked", () => {
-    const wrapper = shallowMount(TodoItem, {
-      propsData: { ...todo }
-    });
-    const checkbox = wrapper.find("input[type=checkbox]");
-
-    checkbox.trigger("click");
-    // expect(wrapper.vm.isDone).toBe(!todo.isDone);
-    expect(wrapper.emitted().update).toBeTruthy();
-    const value = checkbox.element.checked;
-    expect(value).toBe(!todo.isDone);
   });
   it("emits update event with field and value", () => {
     const wrapper = shallowMount(TodoItem, {
       propsData: { ...todo }
     });
-    const checkbox = wrapper.find("input[type=checkbox]");
+    const item = wrapper.find(".todo-item");
 
-    checkbox.trigger("click");
+    item.trigger("click");
     expect(wrapper.emitted().update).toBeTruthy();
     expect(wrapper.emitted().update[0][0]["field"]).toMatch("isDone");
     expect(wrapper.emitted().update[0][0]["value"]).toBe(!todo.isDone);
-    const value = checkbox.element.checked;
-    expect(value).toBe(!todo.isDone);
   });
   it("emits remove event with id", () => {
     const wrapper = shallowMount(TodoItem, {

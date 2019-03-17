@@ -1,20 +1,20 @@
 <template>
   <div class="todo-list">
-    <h3 class="todo-list__title">
-      {{ title }}
-    </h3>
-    <ul class="todo-list__items">
-      <template v-for="todo in items">
-        <todo-item
-          :key="todo.id"
-          :id="todo.id"
-          :title="todo.title"
-          :isDone="todo.isDone"
-          @update="$event => $emit('update', $event)"
-          @remove="$event => $emit('remove', $event)"
-        />
-      </template>
-    </ul>
+    <v-list subheader two-line>
+      <v-subheader class="todo-list__title">{{ title }}</v-subheader>
+      <ul class="todo-list__items">
+        <template v-for="todo in items">
+          <todo-item
+            :key="todo.id"
+            :id="todo.id"
+            :title="todo.title"
+            :isDone="todo.isDone"
+            @update="$event => $emit('update', $event)"
+            @remove="$event => $emit('remove', $event)"
+          />
+        </template>
+      </ul>
+    </v-list>
   </div>
 </template>
 
