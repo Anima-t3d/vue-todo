@@ -32,6 +32,9 @@ export default {
       newTodo: createTodo()
     };
   },
+  async mounted() {
+    await this.$store.dispatch("getTodos");
+  },
   computed: {
     canAdd() {
       return !!this.newTodo.title;
@@ -70,7 +73,7 @@ export default {
     },
     async onAddToList() {
       try {
-        await this.$store.dispatch("addTodo", {todo: this.newTodo});
+        await this.$store.dispatch("addTodo", { todo: this.newTodo });
       } catch (error) {
         console.error(error);
       }

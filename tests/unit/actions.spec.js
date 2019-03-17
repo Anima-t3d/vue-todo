@@ -2,6 +2,15 @@ import { NEW_TODO } from "../../config.js";
 import { actions } from "@/store/index.js";
 
 describe("Actions", () => {
+  describe("getTodos", () => {
+    it("gets todos", async () => {
+      const commit = jest.fn();
+
+      await actions.getTodos({ commit });
+
+      expect(commit).toHaveBeenCalled();
+    });
+  });
   describe("addTodo", () => {
     it("adds a todo", async () => {
       const commit = jest.fn();

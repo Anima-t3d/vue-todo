@@ -2,6 +2,19 @@ import { NEW_TODO } from "../../config.js";
 import { mutations } from "@/store/index.js";
 
 describe("Mutations", () => {
+  describe("SET_TODOS", () => {
+    it("adds todos to the state", () => {
+      const state = {
+        todos: []
+      };
+
+      mutations.SET_TODOS(state, { todos: [NEW_TODO] });
+
+      expect(state).not.toEqual({
+        todos: []
+      });
+    });
+  });
   describe("ADD_TODO", () => {
     it("adds a todo to the state", () => {
       const state = {

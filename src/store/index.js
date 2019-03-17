@@ -1,23 +1,16 @@
+import API from "../api";
 import Vue from "vue";
 import Vuex from "vuex";
 
 Vue.use(Vuex);
 
 export const state = () => ({
-  todos: [
-    {
-      id: "1",
-      title: "Remember the milk!",
-      isDone: false
-    },
-    {
-      id: "2",
-      title: "Remember the bread!",
-      isDone: true
-    }
-  ]
+  todos: []
 });
 export const mutations = {
+  SET_TODOS(state, { todos }) {
+    state.todos = todos;
+  },
   ADD_TODO(state, { todo }) {
     state.todos.push(todo);
   },
@@ -34,9 +27,23 @@ export const mutations = {
   }
 };
 export const actions = {
+  async getTodos({ commit }) {
+    try {
+      const todos = await API.todo.getAll();
+      commit("SET_TODOS", { todos });
+    } catch (error) {
+      console.error(error);
+    }
+  },
   async addTodo({ commit }, { todo }) {
     if (!todo) {
       throw "[addTodo] Expected todo";
+    }
+
+    try {
+      await API.todo.add({ todo });
+    } catch (error) {
+      console.error(error);
     }
 
     commit("ADD_TODO", { todo });
@@ -44,6 +51,12 @@ export const actions = {
   async removeTodo({ commit }, { id }) {
     if (!id) {
       throw "[removeTodo] Expected id";
+    }
+
+    try {
+      await API.todo.remove({ id });
+    } catch (error) {
+      console.error(error);
     }
 
     commit("REMOVE_TODO", { id });
@@ -54,6 +67,12 @@ export const actions = {
     }
     if (typeof isDone !== "boolean") {
       throw "[updateTodoStatus] Expected boolean isDone";
+    }
+
+    try {
+      await API.todo.updateStatus({ id, isDone });
+    } catch (error) {
+      console.error(error);
     }
 
     commit("UPDATE_TODO_STATUS", { id, isDone });
