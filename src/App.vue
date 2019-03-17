@@ -5,6 +5,9 @@
 </template>
 
 <style lang="scss">
+$material-design-icons-font-path: "~material-design-icons-iconfont/dist/fonts/";
+
+@import "~material-design-icons-iconfont/src/material-design-icons";
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
