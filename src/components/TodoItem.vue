@@ -68,6 +68,8 @@ export default {
   }
 
   &:hover {
+    background-color: lightcyan;
+    
     .todo-item__remove {
       display: flex;
     }
