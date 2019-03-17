@@ -1,6 +1,11 @@
 <template>
   <div class="home">
-    <todo-list :items="todoItems" title="Todo's" @update="onUpdateItem" @remove="onRemoveItem" />
+    <todo-list
+      :items="todoItems"
+      title="Todo's"
+      @update="onUpdateItem"
+      @remove="onRemoveItem"
+    />
     <div class="actions">
       <input
         type="text"
@@ -14,15 +19,8 @@
 
 <script>
 // @ is an alias to /src
+import { NEW_TODO } from "../../config";
 import TodoList from "@/components/TodoList.vue";
-
-// TODO: move to constants config
-const NEW_TODO = {
-  // TODO: use better id generator
-  id: "" + new Date().getTime(),
-  title: "",
-  isDone: false
-};
 
 export default {
   name: "home",
@@ -82,9 +80,9 @@ export default {
       this.isAdding = false;
       this.newTodo = { ...NEW_TODO, title: "" };
     },
-    onRemoveItem({id}) {
+    onRemoveItem({ id }) {
       this.todoItems = this.todoItems.filter(todo => todo.id !== id);
-    },
+    }
   }
 };
 </script>

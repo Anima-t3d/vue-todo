@@ -4,7 +4,7 @@
     <h4 :class="{ 'todo-item--done': isDone }" class="todo-item__title">
       {{ title }}
     </h4>
-    <button class="todo-item__remove" @click="$emit('remove', {id})">
+    <button class="todo-item__remove" @click="$emit('remove', { id })">
       Remove
     </button>
   </li>

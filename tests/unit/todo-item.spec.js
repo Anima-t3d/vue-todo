@@ -62,6 +62,6 @@ describe("TodoItem.vue", () => {
 
     removeBtn.trigger("click");
     expect(wrapper.emitted().remove).toBeTruthy();
-    expect(wrapper.emitted().remove[0][0]).toEqual({id: todo.id});
+    expect(wrapper.emitted().remove[0][0]).toEqual({ id: todo.id });
   });
 });
