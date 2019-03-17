@@ -1,0 +1,115 @@
+swagger: '2.0'
+info:
+  description: This is a sample todo api
+  version: 1.0.0
+  title: Todos
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: 'localhost:8080'
+basePath: /v0
+tags:
+  - name: todo
+    description: Your todo
+schemes:
+  - https
+  - http
+paths:
+  /todo:
+    get:
+      tags:
+        - todo
+      summary: Get all todos
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Todos'
+        '404':
+          description: Not found
+        '405':
+          description: Validation exception
+    post:
+      tags:
+        - todo
+      summary: Add a new todo
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Todo object that needs to be added
+          required: true
+          schema:
+            $ref: '#/definitions/TodoUpdate'
+      responses:
+        '405':
+          description: Validation exception
+  '/todo/{todoId}':
+    patch:
+      tags:
+        - todo
+      summary: Update a todo
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: todoId
+          in: path
+          description: Todo id to update
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Todo data that needs to be modified
+          required: true
+          schema:
+            $ref: '#/definitions/TodoUpdate'
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Todo not found
+        '405':
+          description: Validation exception
+    delete:
+      tags:
+        - todo
+      summary: Remove a todo
+      parameters:
+        - name: todoId
+          in: path
+          description: Todo id to delete
+          required: true
+          type: string
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Todo not found
+        '405':
+          description: Validation exception
+definitions:
+  TodoUpdate:
+    type: object
+    properties:
+      title:
+        type: string
+      isDone:
+        type: boolean
+    xml:
+      name: TodoUpdate
+  Todos:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        isDone:
+          type: boolean
